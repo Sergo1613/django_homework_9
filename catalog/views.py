@@ -1,13 +1,13 @@
 from django.shortcuts import render
 
-from catalog.models import Category, Product
+from catalog.models import Product
 
 
 # Create your views here.
 
 def index(request):
     context = {
-        'object_list': Category.objects.all()[:2],
+        'object_list': Product.objects.all(),
         'title': 'Главная - смартфоны'
     }
     return render(request, 'main/home.html', context)
@@ -15,17 +15,16 @@ def index(request):
 
 def categories(request):
     context = {
-        'object_list': Category.objects.all(),
+        'object_list': Product.objects.all(),
         'title': 'Смартфоны - все модели'
     }
     return render(request, 'main/categories.html', context)
 
 
-def category_smartphone(request, pk):
-    category_item = Category.objects.get(pk=pk)
+def product(request, pk):
+    product_item = Product.objects.filter(pk=pk)
     context = {
-        'object_list': Product.objects.filter(category_id=pk),
-        'title': f"Смартфоны - модели {category_item.name}"
+        'object_list': product_item,
     }
     return render(request, 'main/products.html', context)
 
