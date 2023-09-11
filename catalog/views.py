@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from catalog.models import Product
 
 
 # Create your views here.
 class IndexView(TemplateView):
-    template_name = 'main/index.html'
+    template_name = 'catalog/index.html'
     extra_context = {
         'title': 'Главная - смартфоны'
     }
@@ -18,24 +18,25 @@ class IndexView(TemplateView):
         return context_data
 
 
-def categories(request):
-    context = {
-        'object_list': Product.objects.all(),
-        'title': 'Смартфоны - все модели'
-    }
-    return render(request, 'main/categories.html', context)
+class ProductListView(ListView):
+    model = Product
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(pk=self.kwargs.get('pk'))
+        return queryset
 
-def product(request, pk):
-    product_item = Product.objects.filter(pk=pk)
-    context = {
-        'object_list': product_item,
-    }
-    return render(request, 'main/products.html', context)
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+
+        product_item = Product.objects.get(pk=self.kwargs.get('pk'))
+        context_data['object_list'] = product_item,
+
+        return context_data
 
 
 class ContactsView(View):
-    template_name = 'main/contacts.html'
+    template_name = 'catalog/contacts.html'
 
     def get(self, request):
         return render(request, self.template_name)
