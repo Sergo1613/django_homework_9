@@ -1,0 +1,113 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Контакты</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-lg-2 bg-dark">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px; height: 960px">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <svg class="bi pe-none me-2" width="40" height="32">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                    <span class="fs-4">Меню</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link text-white" aria-current="page">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="#home"></use>
+                            </svg>
+                            Главная
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="#table"></use>
+                            </svg>
+                            Заказы
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-white">
+                            <svg class="bi pe-none me-2" width="16" height="16">
+                                <use xlink:href="#grid"></use>
+                            </svg>
+                            Контакты
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div class="content">
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <h2 class="text-center">Форма обратной связи</h2>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Имя</label>
+                                    <input name="name" type="text" class="form-control" id="name" placeholder="Введите имя">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input name="email" type="email" class="form-control" id="email" placeholder="Введите email">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Сообщение</label>
+                                    <textarea name="message" class="form-control" id="message" rows="5" placeholder="Введите сообщение"></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Отправить</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 class="text-center">Контакты</h2>
+                            <p>Внимание! При самовывозе необходимо заранее оформить заказ.
+                                Забрать заказанный товар вы можете в шоуруме Биг Гик в Москвe.
+
+                                Вход в арку, налево по указателю, после этого вы увидите нашу вывеску. Оформление
+                                пропуска не требуется.
+
+                                Ближайшие станции метро - Багратионовская или Фили.
+
+                                Пешая прогулка до нас составит в среднем 5 минут.
+
+                            </p>
+                            <p>Адрес: Москва, Багратионовский проезд, д. 7 к. 20В</p>
+                            <p>Email: info@example.com</p>
+                            <p>Телефон: +1234567890</p>
+                            <p>График работы: ежедневно с 11:00 до 20:00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
