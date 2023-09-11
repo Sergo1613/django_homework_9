@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="card">
+    {% if object.preview %}
+    <img src="{{ object.preview.url }}" class="card-img-top" alt="{{ object.title }}">
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{ object.title }} ({{object.slug}})</h5>
+        <p class="card-text">{{ object.content|truncatewords:20 }}</p>
+    </div>
+    <div class="card-footer">
+        <small class="text-muted">Дата создания: {{ object.created_at }}</small>
+        Просмотры: {{ object.views_count }}
+    </div>
+</div>
+
+
+{% endblock %}
