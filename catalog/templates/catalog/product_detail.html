@@ -1,9 +1,6 @@
 {% extends 'catalog/base.html' %}
 {% load my_tags %}
 {% block content %}
-<div class="col-12 mb-5">
-    <a href="{% url 'catalog:create_product' %}" class="btn btn-primary">Создать продукт</a>
-</div>
 <div class="container">
     <div class="row text-center">
         {% for object in object_list %}
@@ -23,12 +20,7 @@
                             <li>Название - {{ version.version_name }}</li>
                         {% endfor %}
                     </ul>
-                    <a href="{% url 'catalog:view_product' object.pk %}" type="button"
-                       class="btn btn-lg btn-block btn-outline-primary">Подробнее</a>
-                    <a href="{% url 'catalog:edit_product' object.pk %}" type="button"
-                       class="btn btn-lg btn-block btn-outline-secondary">Изменить</a>
-                    <a href="{% url 'catalog:delete_product' object.pk %}" type="button"
-                       class="btn btn-lg btn-block btn-outline-warning">Удалить</a>
+                        <a href="{%  url 'catalog:contacts' %}" type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</a>
                 </div>
             </div>
 

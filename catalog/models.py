@@ -22,7 +22,7 @@ class Product(models.Model):
     photo = models.ImageField(upload_to='catalog/', **NULLABLE, verbose_name='Изображение/превью')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, max_length=100, verbose_name='Категория')
     price_for_purchase = models.IntegerField(verbose_name='Цена за покупку')
-    creation_date = models.DateField(verbose_name='Дата изготовления')
+    creation_date = models.DateField(verbose_name='Дата изготовления', auto_now_add=True)
     last_change_date = models.DateField(verbose_name='Дата изменения', auto_now_add=True)
 
     def __str__(self):
@@ -31,3 +31,19 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, max_length=100, verbose_name='product')
+    version_number = models.FloatField(verbose_name='версия номер')
+    version_name = models.CharField(max_length=100, verbose_name='название версии')
+    is_active = models.BooleanField(default=False, verbose_name='текущая версия')
+
+    def __str__(self):
+        return f'{self.product} {self.version_number}'
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версия'
+
+
