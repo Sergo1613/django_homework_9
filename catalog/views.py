@@ -46,7 +46,7 @@ class ProductUpdateView(UpdateView):
     fields = ('name', 'description', 'category', 'price_for_purchase')
 
     def __init__(self, **kwargs):
-        super().__init__(kwargs)
+        super().__init__()
         self.object = None
 
     def get_success_url(self):
