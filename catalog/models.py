@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
@@ -24,6 +25,8 @@ class Product(models.Model):
     price_for_purchase = models.IntegerField(verbose_name='Цена за покупку')
     creation_date = models.DateField(verbose_name='Дата изготовления', auto_now_add=True)
     last_change_date = models.DateField(verbose_name='Дата изменения', auto_now_add=True)
+
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Владелец')
 
     def __str__(self):
         return f'{self.name}, {self.price_for_purchase}, {self.category}'
