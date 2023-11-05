@@ -7,7 +7,7 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ('name', 'description', 'photo', 'category', 'price_for_purchase',)
+        fields = ('name', 'description', 'photo', 'category', 'price_for_purchase', 'owner')
 
     def clean_name(self):
         cleaned_data = self.cleaned_data['name']
@@ -44,3 +44,9 @@ class StyleFormMixin:
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
+
+
+class ProductModeratorForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['is_published', 'description', 'category']

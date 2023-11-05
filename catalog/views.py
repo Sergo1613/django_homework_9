@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
+from django.http import HttpResponseForbidden
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import View
@@ -9,12 +11,27 @@ from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Version
 
 
+class DispatchMixin:
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.owner != self.request.user:
+            return HttpResponseForbidden(
+                "У вас нет прав на редактирование или удаление продукта, создателем которого вы не являетесь."
+            )
+        return super().dispatch(request, *args, **kwargs)
+
+
 class ProductListView(ListView):
     model = Product
     extra_context = {
         'title': 'Главная - смартфоны'
 
     }
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(is_published=True)
+        return queryset
 
 
 class ProductDetailView(DetailView):
@@ -37,7 +54,7 @@ class ProductDetailView(DetailView):
         return context_data
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:index')
@@ -50,7 +67,7 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, DispatchMixin, UpdateView):
     model = Product
     fields = ('name', 'description', 'category', 'price_for_purchase')
 
@@ -84,7 +101,7 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DispatchMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:index')
 
